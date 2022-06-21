@@ -346,8 +346,7 @@ class plgVmPaymentPortmone extends vmPSPlugin {
      * @return null
      */
     public function plgVmOnPaymentNotification() {
-        $callback = JRequest::get( 'post' );
-        $order_id = $this->portmone_get_order_id($callback['SHOPORDERNUMBER']);
+        $order_id = $this->portmone_get_order_id($_POST['SHOPORDERNUMBER']);
 
         if (!class_exists('VirtueMartModelOrders'))
             require(JPATH_VM_ADMINISTRATOR . DS . 'models' . DS . 'orders.php');
