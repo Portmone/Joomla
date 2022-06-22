@@ -292,11 +292,14 @@ class plgVmPaymentPortmone extends vmPSPlugin {
                             'description'       => $order['details']['BT']->order_number,
                             'success_url'       => $responseUrl,
                             'failure_url'       => $callbackUrl,
-                            'lang'              => strtoupper($lang),
+                            'lang'              => strtolower($lang),
                             'cms_module_name'   => json_encode(['name' => 'Joomla', 'v' => (new JVersion)->getShortVersion()]),
-                            'exp_time'          => $method->exp_time,
                             'dt'                => date("YmdHis"),
                             'encoding'          => 'UTF-8');
+
+        if (! empty($method->exp_time) && $method->exp_time > 0) {
+            $formFields['exp_time'] = $method->exp_time;
+        }
 
         $strToSignature = $formFields['payee_id'] . $formFields['dt'] . bin2hex($formFields['shop_order_number']) . $formFields['bill_amount'];
         $strToSignature = strtoupper($strToSignature).strtoupper(bin2hex($method->user_login));
